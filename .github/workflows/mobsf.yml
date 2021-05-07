@@ -9,25 +9,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  mobile-security:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: mobsfscan scan
+        id: mobsfscan
+        uses: MobSF/mobsfscan-action@master
         with:
-         python-version: '2.7'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install mobsfscan
-
-      - name: Run mobsfscan
-        run: |
-          mobsfscan --sarif --output results.sarif . || true
+          args: '. --sarif --output results.sarif || true'
 
       - name: Upload mobsfscan report
         uses: github/codeql-action/upload-sarif@v1
