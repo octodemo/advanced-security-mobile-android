@@ -15,19 +15,27 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Checkout mobsfscan repo
+        uses: actions/checkout@v2
+        with:
+          repository: MobSF/mobsfscan
+          path: mobsfscan
+
       - name: Setup python
         uses: actions/setup-python@v2
         with:
-          python-version: 2.7
+          python-version: 3.8
           
-      - name: Install
+      - name: Install deps
         run: |
-          pip install mobsfscan
+          pip install colorama>=0.4.3 libsast>=1.4.0 sarif-om>=1.0.4 jschema-to-python>=1.2.3 tabulate>=0.8.7
 
       - name: mobsfscan scan
         id: mobsfscan
         run: |
-          mobsfscan --sarif --output results.sarif || true
+          mobsfscan --sarif --output results.sarif
+      
+      # || true
 
       - name: Upload mobsfscan report
         uses: github/codeql-action/upload-sarif@v1
