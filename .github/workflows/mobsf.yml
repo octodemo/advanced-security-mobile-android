@@ -23,7 +23,7 @@ jobs:
       - name: mobsfscan
         uses: GeekMasher/mobsfscan@main
         with:
-          args: . --sarif --output results.sarif || true
+          args: . --sarif --output results.sarif
 
 #       - name: Checkout mobsfscan repo
 #         uses: actions/checkout@v2
