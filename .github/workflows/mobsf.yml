@@ -15,11 +15,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 2.7
+          
+      - name: Install
+        run: |
+          pip install mobsfscan
+
       - name: mobsfscan scan
         id: mobsfscan
-        uses: MobSF/mobsfscan-action@master
-        with:
-          args: '. --sarif --output results.sarif || true'
+        run: |
+          mobsfscan --sarif --output results.sarif || true'
 
       - name: Upload mobsfscan report
         uses: github/codeql-action/upload-sarif@v1
